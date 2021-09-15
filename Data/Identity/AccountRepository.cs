@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using API.Dto;
 using API.Entities.Identity;
@@ -5,21 +6,22 @@ using API.Interface;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Nas_Pos.Helper;
 
 namespace API.Data.Identity
 {
     public class AccountRepository : IAccountRepository
     {
 
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Employee> _userManager;
+        private readonly SignInManager<Employee> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IdentityDbContext _context;
         private readonly ILogger<AccountRepository> _logger;
         private readonly IMapper _mapper;
 
-        public AccountRepository(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<AccountRepository> logger, IMapper mapper,
+        public AccountRepository(UserManager<Employee> userManager, SignInManager<Employee> signInManager, ILogger<AccountRepository> logger, IMapper mapper,
              RoleManager<IdentityRole> roleManager, ITokenService tokenService, IdentityDbContext context)
         {
             _mapper = mapper;
@@ -30,19 +32,72 @@ namespace API.Data.Identity
             _signInManager = signInManager;
             _userManager = userManager;
         }
-        public Task Login(LoginDto model)
+        public async Task<string> Login(LoginDto model)
         {
-            throw new System.NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            
+            var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+            if(result.Succeeded)
+            {
+                var roleName = await _userManager.GetRolesAsync(user);
+
+                
+                string Token = _tokenService.CreateToken(user, roleName[0]);
+                return Token;
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
-        public Task RegisterCustomer(Customer model)
+        public async Task RegisterAdmin(Employee model, string password)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                model.UserName=model.Email;
+                
+                var role =await _roleManager.RoleExistsAsync(Roles.Admin);
+                if(!role){
+                    await _roleManager.CreateAsync(new IdentityRole(Roles.Admin));
+                }
+                var result = await _userManager.CreateAsync(model, password);
+                if (!result.Succeeded) throw new Exception();
+
+                await _userManager.AddToRoleAsync(model, Roles.Admin);
+                
+               
+                
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
 
-        public Task RegisterEmployee(Employee model)
+        public async Task RegisterEmployee(Employee model,string password)
         {
-            throw new System.NotImplementedException();
+             try
+            {
+                model.UserName=model.Email;
+                
+                var role =await _roleManager.RoleExistsAsync(Roles.Employee);
+                if(!role){
+                    await _roleManager.CreateAsync(new IdentityRole(Roles.Employee));
+                }
+                var result = await _userManager.CreateAsync(model, password);
+                if (!result.Succeeded) throw new Exception();
+
+                await _userManager.AddToRoleAsync(model, Roles.Employee);
+                
+               
+                
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+
         }
     }
 }

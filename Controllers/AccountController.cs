@@ -4,6 +4,7 @@ using API.Entities.Identity;
 using API.Helper;
 using API.Interface;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -26,42 +27,46 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginDto model)
         {
             if(!ModelState.IsValid) return BadRequest();
             try{
-                await _accountRepo.Login(model);
-                return "ok";
+                string token = await _accountRepo.Login(model);
+                return token;
             }
             catch{
-                return new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidLogin));
+                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidLogin)));
             }
         }
+        [HttpPost("register")]
         public async Task<ActionResult> RegisterEmployee(RegisterEmployeeDto model)
         {
             if(!ModelState.IsValid) return BadRequest();
             var obj = _mapper.Map<Employee>(model);
             try{
-                await _accountRepo.RegisterEmployee(obj);
+                await _accountRepo.RegisterEmployee(obj,model.Password);
                 return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
             catch{
-                return new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRegister));
+                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
+            }
+        }
+        [HttpPost("registerAdmin")]
+        public async Task<ActionResult> RegisterAdmin(RegisterEmployeeDto model)
+        {
+            if(!ModelState.IsValid) return BadRequest();
+            var obj = _mapper.Map<Employee>(model);
+            try{
+                await _accountRepo.RegisterAdmin(obj,model.Password);
+                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
+            }
+            catch{
+                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
             }
         }
 
-        public async Task<ActionResult> RegisterCustomer(RegisterCustomerDto model)
-        {
-             if(!ModelState.IsValid) return BadRequest();
-            var obj = _mapper.Map<Customer>(model);
-            try{
-                await _accountRepo.RegisterCustomer(obj);
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
-            }
-            catch{
-                return new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRegister));
-            }
-        }
+        
         
     }
 }
