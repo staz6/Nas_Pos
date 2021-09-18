@@ -8,7 +8,11 @@ namespace Nas_Pos.Dto
         public string Title { get; set; }
         public string UnitOfMeasure { get; set; }
         public int Price { get; set; }
-        public int Quantity { get; set; }
+        public int stock { get; set; }
         public int MinimumThreshold { get; set; }
+        public string Shelve { get; set; }
+        public int ProductTypeId { get; set; }
+        public string Description { get; set; }
+        public string ProductTypeName { get; set; }
     }
 }

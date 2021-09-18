@@ -7,10 +7,14 @@ namespace API.Entities
     {
         public string Title { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
+        public string PictureUrl { get; set; }
         public int Price { get; set; }
-        public int Quantity { get; set; }
+        public int Stock { get; set; }
+        public string Description { get; set; }
         public int MinimumThreshold { get; set; }
         public ProductType ProductType { get; set; }
         public int ProductTypeId { get; set; }
+        public ProductShelves ProductShelves{get;set;}
+        public int? ProductShelvesId { get; set; }
     }
 }

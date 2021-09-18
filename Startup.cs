@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using API.Data;
 using API.Data.Identity;
 using API.Entities.Identity;
 using API.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -16,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Nas_Pos.Data;
 using Nas_Pos.Helper;
@@ -47,7 +50,10 @@ namespace API
               services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped<IAccountRepository,AccountRepository>();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
+            services.AddScoped<IBasketService,BasketService>();
+            services.AddScoped<IOrderService,OrderService>();
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddIdentity<Employee, IdentityRole>(options => 
@@ -60,6 +66,19 @@ namespace API
                     })
                     .AddEntityFrameworkStores<IdentityDbContext>()
                     .AddDefaultTokenProviders();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config
+                            ["Token:Key"])),
+                            ValidIssuer = _config["Token:Issuer"],
+                            ValidateIssuer = true,
+                            ValidateAudience = false
+                        };
+                    });
 
 
             services.AddControllers().AddNewtonsoftJson(options => {
@@ -85,6 +104,7 @@ namespace API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -95,10 +115,10 @@ namespace API
             {
                 scope.ServiceProvider.GetService<IdentityDbContext>().MigrateDb();
             }
-            using(var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                scope.ServiceProvider.GetService<AppDbContext>().MigrateDb();
-            }
+            // using(var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            // {
+            //     scope.ServiceProvider.GetService<AppDbContext>().MigrateDb();
+            // }
         }
     }
 }

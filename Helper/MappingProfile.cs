@@ -1,11 +1,18 @@
+using System.Linq;
 using API.Dto;
 using API.Entities;
 using API.Entities.Identity;
+using API.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Nas_Pos.Dto;
 using Nas_Pos.Dto.ProductDtos;
 using Nas_Pos.Dto.ProductTypeDtos;
+using API.Dto.ProductShelves;
+using API.Entities.OrderAggregate;
+using API.Dto.DeliveryMethod;
+using API.Dto.Basket;
+using API.Dto.EmployeeBasket;
 
 namespace Nas_Pos.Helper
 {
@@ -23,9 +30,24 @@ namespace Nas_Pos.Helper
 
 
 
-            CreateMap<Product,GetProductDto>();
+            CreateMap<Product,GetProductDto>().ForMember( x => x.Shelve , o => o.MapFrom(s => s.ProductShelves.Title))
+                                            .ForMember(x => x.ProductTypeName, o => o.MapFrom(s => s.ProductType.Title))
+                                            .ForMember(x => x.ProductTypeId, o => o.MapFrom(s => s.ProductType.Id));
             CreateMap<PostProductDto,Product>();
             CreateMap<PutProductDto,Product>().ReverseMap();    
+
+            
+           CreateMap<ProductShelves,GetProductShelvesDto>();
+           CreateMap<PostProductShelvesDto,ProductShelves>();
+           CreateMap<PutProductShelvesDto,ProductShelves>().ReverseMap();
+
+           CreateMap<DeliveryMethod,GetDeliveryMethodDto>();
+           CreateMap<PostDeliveryMethodDto,DeliveryMethod>();
+
+        //    Employee BASKET
+
+            CreateMap<Basket,EmployeeBasket>().ForMember(x => x.Total, o => o.MapFrom(s => s.BasketItems.Select(c => c.Price).Sum()));
+            CreateMap<BasketItem,EmployeeBasketItem>();
             
         }
     }

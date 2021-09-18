@@ -23,24 +23,24 @@ namespace Nas_Pos.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-        [HttpGet("productType")]
-        public async Task<ActionResult<GetProductTypeDto>> GetProductTypeList()
-        {
-            var spec = new GetProductTypeWithProducts();
-            var obj =await  _repo.ListAsyncWithSpec(spec);
-            var mapObj = _mapper.Map<IReadOnlyList<GetProductTypeDto>>(obj);
-            return Ok(mapObj);
-        }
+        // [HttpGet("productType")]
+        // public async Task<ActionResult<GetProductTypeDto>> GetProductTypeList()
+        // {
+        //     var spec = new GetProductTypeWithProducts();
+        //     var obj =await  _repo.ListAsyncWithSpec(spec);
+        //     var mapObj = _mapper.Map<IReadOnlyList<GetProductTypeDto>>(obj);
+        //     return Ok(mapObj);
+        // }
 
-        [HttpGet("productType/{id}")]
-        public async Task<ActionResult> GetProductTypeById(int id)
-        {
-            var spec = new GetProductTypeWithProducts(id);
-            var obj = await _repo.GetEntityWithSpec(spec);
-            if(obj == null) return NotFound();
-            var mapObj = _mapper.Map<GetProductTypeDto>(obj);
-            return Ok(mapObj);
-        }
+        // [HttpGet("productType/{id}")]
+        // public async Task<ActionResult> GetProductTypeById(int id)
+        // {
+        //     var spec = new GetProductTypeWithProducts(id);
+        //     var obj = await _repo.GetEntityWithSpec(spec);
+        //     if(obj == null) return NotFound();
+        //     var mapObj = _mapper.Map<GetProductTypeDto>(obj);
+        //     return Ok(mapObj);
+        // }
         [HttpPost("productType")]
         public async Task<ActionResult> PostProductType(PostProductTypeDto model)
         {

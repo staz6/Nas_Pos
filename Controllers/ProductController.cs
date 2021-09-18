@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Entities;
 using API.Helper;
+using API.Specification;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using Nas_Pos.Dto;
 using Nas_Pos.Dto.ProductDtos;
 using Nas_Pos.Helper;
 using Nas_Pos.Interface;
+using Nas_Pos.Specification;
 
 namespace Nas_Pos.Controllers
 {
@@ -27,8 +29,8 @@ namespace Nas_Pos.Controllers
         [HttpGet("product")]
         public async Task<ActionResult<GetProductDto>> GetProductList()
         {
-
-            var obj = await _repo.GetAll();
+            var spec = new GetProductWithShelvesSpecification();
+            var obj = await _repo.ListAsyncWithSpec(spec);
             var mapObj = _mapper.Map<IReadOnlyList<GetProductDto>>(obj);
             return Ok(mapObj);
         }
@@ -36,8 +38,17 @@ namespace Nas_Pos.Controllers
         [HttpGet("product/{id}")]
         public async Task<ActionResult> GetProductById(int id)
         {
-            
-            var obj = await _repo.GetById(id);
+            var spec = new GetProductWithShelvesSpecification();
+            var obj = await _repo.GetEntityWithSpec(spec);
+            if(obj == null) return NotFound();
+            var mapObj = _mapper.Map<GetProductDto>(obj);
+            return Ok(mapObj);
+        }
+        [HttpGet("productType")]
+        public async Task<ActionResult> GetProductByType(int id)
+        {
+            var spec = new GetProductWithShelvesSpecification();
+            var obj = await _repo.GetEntityWithSpec(spec);
             if(obj == null) return NotFound();
             var mapObj = _mapper.Map<GetProductDto>(obj);
             return Ok(mapObj);

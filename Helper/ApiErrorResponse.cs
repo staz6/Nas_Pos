@@ -23,6 +23,7 @@ namespace API.Helper
                 ErrorStatusCode.CreateSuccess=>"Created SuccessFully",
                 ErrorStatusCode.UpdateSuccess=>"Updated SuccessFully",
                 ErrorStatusCode.DeleteSuccess=>"Deleted SuccessFully",
+                ErrorStatusCode.ItemAdd => "Item added successfully",
                 ErrorStatusCode.ValidRegister => "Register Successfull",
                 ErrorStatusCode.InvalidRegister => "Invalid Register Attempt",
                 ErrorStatusCode.DuplicateEmail => "Email already exist",

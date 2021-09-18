@@ -1,0 +1,21 @@
+[
+    {
+      "ShortName": "ULK",
+      "DeliveryTime": "2-3",
+      "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis ",
+      "price": 6
+    },
+    {
+        "ShortName": "PTK",
+        "DeliveryTime": "5-7",
+        "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis ",
+        "price": 10
+    },
+    {
+        "ShortName": "WKL",
+        "DeliveryTime": "2 week",
+        "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis ",
+        "price": 20
+    }
+    
+]

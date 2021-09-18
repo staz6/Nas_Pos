@@ -7,6 +7,8 @@ namespace Nas_Pos.Specification
         public GetProductTypeWithProducts() 
         {
             AddInclude(x => x.Products);
+            
+            
         }
         public GetProductTypeWithProducts(int id) : base(x => x.Id==id)
         {
