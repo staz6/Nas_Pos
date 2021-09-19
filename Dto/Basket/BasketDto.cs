@@ -11,7 +11,7 @@ namespace API.Dto
         public List<EmployeeBasketItem> BasketProducts { get; set; }
         public int DeliveryMethodId { get; set; }
         public PostAddressDto Address { get; set; }
-        public PostPaymentMethod PaymentMethod { get; set; }
+        public int PaymentMethodId { get; set; }
         public OrderStatus OrderStatus { get; set; }
 
     }

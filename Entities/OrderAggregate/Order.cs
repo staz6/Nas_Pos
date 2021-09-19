@@ -11,8 +11,19 @@ namespace API.Entities.OrderAggregate
         {
         }
 
-        public Order(Customer customer, DateTime orderDate, Address? shipToAddress, 
-        DeliveryMethod? deliveryMethod, PaymentMethod paymentMethod ,IReadOnlyList<OrderItem> orderItems, int subtotal, OrderStatus status)
+        public Order(Customer customer, DateTime orderDate,
+        PaymentMethod paymentMethod ,IReadOnlyList<OrderItem> orderItems, decimal subtotal, OrderStatus status)
+        {
+            Customer = customer;
+            PaymentMethod=paymentMethod;
+            OrderDate = orderDate;          
+            OrderItems = orderItems;
+            Subtotal = subtotal;
+            Status = status;
+        }
+
+        public Order(Customer customer, DateTime orderDate, Address shipToAddress, 
+        DeliveryMethod deliveryMethod, PaymentMethod paymentMethod ,IReadOnlyList<OrderItem> orderItems, decimal subtotal, OrderStatus status)
         {
             Customer = customer;
             PaymentMethod=paymentMethod;
@@ -31,11 +42,16 @@ namespace API.Entities.OrderAggregate
         public DeliveryMethod? DeliveryMethod { get; set; }
         public PaymentMethod PaymentMethod{get;set;}
         public IReadOnlyList<OrderItem> OrderItems { get; set; }
-        public int Subtotal { get; set; }
+        public decimal Subtotal { get; set; }
         public OrderStatus Status  { get; set; }
 
-        public int GetTotel(){
-            return Subtotal + DeliveryMethod.price;
+        public decimal GetTotel(){
+            if(DeliveryMethod != null)
+            {
+                return Subtotal + DeliveryMethod.price;
+            }
+            return Subtotal;
+            
         }
 
     }

@@ -13,6 +13,8 @@ using API.Entities.OrderAggregate;
 using API.Dto.DeliveryMethod;
 using API.Dto.Basket;
 using API.Dto.EmployeeBasket;
+using API.Dto.Customer;
+using Nas_Pos.Dto.PaymentMethod;
 
 namespace Nas_Pos.Helper
 {
@@ -44,10 +46,26 @@ namespace Nas_Pos.Helper
            CreateMap<DeliveryMethod,GetDeliveryMethodDto>();
            CreateMap<PostDeliveryMethodDto,DeliveryMethod>();
 
+           CreateMap<PaymentMethod,GetPaymentMethodDto>();
+           CreateMap<PostPaymentMethodDto,PaymentMethod>();
+
+
+           ///Customer
+           CreateMap<Customer,GetCustomerDto>();
+           CreateMap<PostCustomerDto,Customer>();
+           CreateMap<PutCustomerDto,Customer>();
+
         //    Employee BASKET
 
             CreateMap<Basket,EmployeeBasket>().ForMember(x => x.Total, o => o.MapFrom(s => s.BasketItems.Select(c => c.Price).Sum()));
             CreateMap<BasketItem,EmployeeBasketItem>();
+
+
+
+
+            ///ORDER MAP
+            CreateMap<PostAddressDto,Address>();
+            CreateMap<PostPaymentMethod,PaymentMethod>();
             
         }
     }

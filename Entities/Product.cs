@@ -9,7 +9,7 @@ namespace API.Entities
         public UnitOfMeasure UnitOfMeasure { get; set; }
         public string PictureUrl { get; set; }
         public int Price { get; set; }
-        public int Stock { get; set; }
+        public decimal Stock { get; set; }
         public string Description { get; set; }
         public int MinimumThreshold { get; set; }
         public ProductType ProductType { get; set; }
