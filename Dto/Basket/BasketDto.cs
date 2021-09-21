@@ -13,6 +13,7 @@ namespace API.Dto
         public PostAddressDto Address { get; set; }
         public int PaymentMethodId { get; set; }
         public OrderStatus OrderStatus { get; set; }
+        public decimal AmountPaid { get; set; }
 
     }
 }

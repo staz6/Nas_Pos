@@ -15,6 +15,9 @@ using API.Dto.Basket;
 using API.Dto.EmployeeBasket;
 using API.Dto.Customer;
 using Nas_Pos.Dto.PaymentMethod;
+using API.Dto.Order;
+using API.Entities.Ledger;
+using API.Dto.Ledger;
 
 namespace Nas_Pos.Helper
 {
@@ -66,6 +69,20 @@ namespace Nas_Pos.Helper
             ///ORDER MAP
             CreateMap<PostAddressDto,Address>();
             CreateMap<PostPaymentMethod,PaymentMethod>();
+
+            CreateMap<Order,GetOrderDto>().ForMember(x => x.DeliveryMethod, o => o.MapFrom(s => s.DeliveryMethod.ShortName))
+                                    .ForMember( x=> x.DecimalMethodPrice, o => o.MapFrom(s => s.DeliveryMethod.price))
+                                    .ForMember( x => x.PaymentMethod, o => o.MapFrom(s => s.PaymentMethod.Type));
+            CreateMap<OrderItem,GetOrderItemDto>();
+            CreateMap<Customer,GetCustomerIdNameDto>().ForMember(x => x.FullName, o => o.MapFrom(s => s.FirstName+" "+s.LastName));
+            CreateMap<Address,GetAddressDto>();
+
+
+            ///Ledger
+            CreateMap<Ledger,GetLedgerDto>().ForMember(x => x.OrderId, o => o.MapFrom(s => s.Order.Id));
+                                       
+            CreateMap<Transaction,GetTransactionDto>();
+            CreateMap<PostTransactionDto,Transaction>();
             
         }
     }

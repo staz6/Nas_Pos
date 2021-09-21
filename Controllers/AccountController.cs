@@ -36,7 +36,7 @@ namespace API.Controllers
                 return token;
             }
             catch{
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidLogin)));
+                return Ok((new ApiErrorResponse(ErrorStatusCode.InvalidLogin)));
             }
         }
         [HttpPost("register")]
@@ -46,10 +46,10 @@ namespace API.Controllers
             var obj = _mapper.Map<Employee>(model);
             try{
                 await _accountRepo.RegisterEmployee(obj,model.Password);
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
+                return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
             catch{
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
             }
         }
         [HttpPost("registerAdmin")]
@@ -59,10 +59,10 @@ namespace API.Controllers
             var obj = _mapper.Map<Employee>(model);
             try{
                 await _accountRepo.RegisterAdmin(obj,model.Password);
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
+                return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
             catch{
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
             }
         }
 

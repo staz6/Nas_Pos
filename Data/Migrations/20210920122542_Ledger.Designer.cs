@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Nas_Pos.Data;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210920122542_Ledger")]
+    partial class Ledger
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,10 +119,7 @@ namespace API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("AmountPaid")
-                        .HasColumnType("REAL");
-
-                    b.Property<double>("AmountRemaining")
+                    b.Property<double>("Amount")
                         .HasColumnType("REAL");
 
                     b.Property<DateTime>("CreatedAt")
@@ -131,9 +130,6 @@ namespace API.Data.Migrations
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<double>("TotalAmount")
-                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -383,8 +379,7 @@ namespace API.Data.Migrations
                 {
                     b.HasOne("API.Entities.Ledger.Ledger", null)
                         .WithMany("Transactions")
-                        .HasForeignKey("LedgerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("LedgerId");
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>

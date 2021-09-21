@@ -28,10 +28,10 @@ namespace API.Helper
                 ErrorStatusCode.InvalidRegister => "Invalid Register Attempt",
                 ErrorStatusCode.DuplicateEmail => "Email already exist",
                 ErrorStatusCode.InvalidLogin => "Incorrect email address or password",
+                ErrorStatusCode.NotFound => "Resource Not Found",
                 200 => "Invalid Login Attempt",
                 400 => "Bad Request",
                 ErrorStatusCode.NotAuthorize => "Not Authorize",
-                404 => "Resource Not Found",
                 ErrorStatusCode.BiometricExist => "Biometric is register to another employee",
                 ErrorStatusCode.InvalidRequest => "Invalid Request",
                 _ => null

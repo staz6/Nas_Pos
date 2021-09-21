@@ -12,6 +12,7 @@ namespace API.Helper
         public const int InvalidLogin = 103;
         public const int InvalidRequest = 500;
         public const int NotAuthorize = 401;
+        public const int NotFound = 404;
         public const int BiometricExist = 600;
 
         public const string CustomerNotFound = "Customer Not Found";

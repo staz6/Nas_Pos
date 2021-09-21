@@ -33,11 +33,11 @@ namespace API.Controllers
             try
             {
                 await _service.addItem(userId, productId, quantity);
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.ItemAdd)));
+                return Ok((new ApiErrorResponse(ErrorStatusCode.ItemAdd)));
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest(ex.Message);
             }
 
         }
@@ -54,7 +54,7 @@ namespace API.Controllers
             }
             catch
             {
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }
 
         }
@@ -65,11 +65,11 @@ namespace API.Controllers
             try
             {
                 await _service.deleteBasket(id);
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.DeleteSuccess)));
+                return Ok((new ApiErrorResponse(ErrorStatusCode.DeleteSuccess)));
             }
             catch(Exception ex)
             {
-                return BadRequest(new ObjectResult(ex.Message));
+                return BadRequest((ex.Message));
             }
         }
 
@@ -80,11 +80,11 @@ namespace API.Controllers
             try
             {
                 await _service.removeItem(userId,productId);
-                return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
+                return Ok((new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
             }
             catch(Exception ex)
             {
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }
         }
         

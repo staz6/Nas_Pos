@@ -45,7 +45,7 @@ namespace API.Entities.OrderAggregate
         public decimal Subtotal { get; set; }
         public OrderStatus Status  { get; set; }
 
-        public decimal GetTotel(){
+        public decimal GetTotal(){
             if(DeliveryMethod != null)
             {
                 return Subtotal + DeliveryMethod.price;

@@ -10,7 +10,7 @@ using Nas_Pos.Interface;
 namespace Nas_Pos.Controllers
 {
     [ApiController]
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     public class PaymentMethodController : ControllerBase
     {
          private readonly IGenericRepository<PaymentMethod> _repo;
@@ -20,7 +20,7 @@ namespace Nas_Pos.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-        [HttpGet("deliveryMethod")]
+        [HttpGet("paymentMethod")]
         public async Task<ActionResult<GetPaymentMethodDto>> GetPaymentMethodList()
         {
             
@@ -29,7 +29,7 @@ namespace Nas_Pos.Controllers
             return Ok(mapObj);
         }
 
-        [HttpGet("deliveryMethod/{id}")]
+        [HttpGet("paymentMethod/{id}")]
         public async Task<ActionResult> GetPaymentMethodById(int id)
         {
             
@@ -39,7 +39,7 @@ namespace Nas_Pos.Controllers
             return Ok(mapObj);
         }
         
-        [HttpPost("deliveryMethod")]
+        [HttpPost("paymentMethod")]
         public async Task<ActionResult> PostPaymentMethod(PostPaymentMethodDto model)
         {
             if(!ModelState.IsValid) return BadRequest();
@@ -47,31 +47,31 @@ namespace Nas_Pos.Controllers
                 var mapObj = _mapper.Map<PaymentMethod>(model);
             _repo.Insert(mapObj);
             await _repo.Save();
-            return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.CreateSuccess)));
+            return Ok((new ApiErrorResponse(ErrorStatusCode.CreateSuccess)));
             }
             catch{
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }
             
             
         }
 
-        [HttpDelete("deliveryMethod/{id}")]
+        [HttpDelete("paymentMethod/{id}")]
         public async Task<ActionResult> DeletePaymentMethod(int id)
         {
             if(!ModelState.IsValid) return BadRequest();
             try{
                 _repo.Delete(id);
             await _repo.Save();
-            return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.DeleteSuccess)));
+            return Ok((new ApiErrorResponse(ErrorStatusCode.DeleteSuccess)));
             }
             catch{
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }
             
         }
 
-        // [HttpPatch("deliveryMethod/{id}")]
+        // [HttpPatch("paymentMethod/{id}")]
         // public async Task<ActionResult> patchProject(int id, JsonPatchDocument<PutPaymentMethodDto> model)
         // {
         //     if (!ModelState.IsValid) return BadRequest();
@@ -83,7 +83,7 @@ namespace Nas_Pos.Controllers
         //     _mapper.Map(objToPatch, obj);
         //     _repo.Update(obj);
         //     await _repo.Save();
-        //     return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
+        //     return Ok((new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
 
         // }
 

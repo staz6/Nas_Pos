@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using API.Helper;
 using API.Interface;
 using Microsoft.EntityFrameworkCore;
 using Nas_Pos.Data;
@@ -19,6 +20,8 @@ namespace API.Data
         public async Task addItem(string employeeId, int productId,decimal quantity)
         {
             var product = _context.Products.FirstOrDefault(x => x.Id==productId);
+            if(product == null ) throw new Exception("Resource not found");
+            if(product.Stock < quantity) throw new Exception("Not enough stock of product type : "+product.Title);
             var obj = _context.Baskets.FirstOrDefault(x => x.EmployeeId==employeeId);
             if(obj == null){
                 Basket tmp = new Basket{
@@ -65,7 +68,7 @@ namespace API.Data
 
         public async Task removeItem(string employeeId, int productId)
         {
-           var item = await _context.BasketItems.FirstOrDefaultAsync(x => x.ProductId==productId);
+           var item = await _context.BasketItems.FirstOrDefaultAsync(x => x.Id==productId);
            _context.BasketItems.Remove(item);
            await _context.SaveChangesAsync();
         }

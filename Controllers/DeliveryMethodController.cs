@@ -48,10 +48,10 @@ namespace API.Controllers
                 var mapObj = _mapper.Map<DeliveryMethod>(model);
             _repo.Insert(mapObj);
             await _repo.Save();
-            return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.CreateSuccess)));
+            return Ok((new ApiErrorResponse(ErrorStatusCode.CreateSuccess)));
             }
             catch{
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }
             
             
@@ -64,10 +64,10 @@ namespace API.Controllers
             try{
                 _repo.Delete(id);
             await _repo.Save();
-            return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.DeleteSuccess)));
+            return Ok((new ApiErrorResponse(ErrorStatusCode.DeleteSuccess)));
             }
             catch{
-                return BadRequest(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }
             
         }
@@ -84,7 +84,7 @@ namespace API.Controllers
         //     _mapper.Map(objToPatch, obj);
         //     _repo.Update(obj);
         //     await _repo.Save();
-        //     return Ok(new ObjectResult(new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
+        //     return Ok((new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
 
         // }
 

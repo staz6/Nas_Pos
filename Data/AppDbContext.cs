@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Polly;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Linq;
+using API.Entities.Ledger;
 
 namespace Nas_Pos.Data
 {
@@ -22,6 +23,8 @@ namespace Nas_Pos.Data
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<Ledger> Ledgers{get;set;}
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
