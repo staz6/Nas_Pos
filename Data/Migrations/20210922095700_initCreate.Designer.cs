@@ -9,8 +9,8 @@ using Nas_Pos.Data;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210920133649_ledgerChanges")]
-    partial class ledgerChanges
+    [Migration("20210922095700_initCreate")]
+    partial class initCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,9 +88,6 @@ namespace API.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FullName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
@@ -252,8 +249,8 @@ namespace API.Data.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.Property<double>("Quantity")
                         .HasColumnType("REAL");
@@ -303,14 +300,17 @@ namespace API.Data.Migrations
                     b.Property<string>("PictureUrl")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.Property<int?>("ProductShelvesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("PurchasedPrice")
+                        .HasColumnType("REAL");
 
                     b.Property<double>("Stock")
                         .HasColumnType("REAL");
@@ -385,7 +385,8 @@ namespace API.Data.Migrations
                 {
                     b.HasOne("API.Entities.Ledger.Ledger", null)
                         .WithMany("Transactions")
-                        .HasForeignKey("LedgerId");
+                        .HasForeignKey("LedgerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("API.Entities.OrderAggregate.Order", b =>

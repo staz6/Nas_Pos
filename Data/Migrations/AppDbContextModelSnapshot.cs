@@ -88,9 +88,6 @@ namespace API.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FullName")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
@@ -250,8 +247,8 @@ namespace API.Data.Migrations
                     b.Property<int?>("OrderId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.Property<double>("Quantity")
                         .HasColumnType("REAL");
@@ -301,14 +298,17 @@ namespace API.Data.Migrations
                     b.Property<string>("PictureUrl")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.Property<int?>("ProductShelvesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("PurchasedPrice")
+                        .HasColumnType("REAL");
 
                     b.Property<double>("Stock")
                         .HasColumnType("REAL");

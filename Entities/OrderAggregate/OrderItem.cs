@@ -8,7 +8,7 @@ namespace API.Entities.OrderAggregate
         {
         }
 
-        public OrderItem(ProductItemOrdered itemOrdered, int price, decimal quantity)
+        public OrderItem(ProductItemOrdered itemOrdered, decimal price, decimal quantity)
         {
             ItemOrdered = itemOrdered;
             Price = price;
@@ -16,7 +16,7 @@ namespace API.Entities.OrderAggregate
         }
 
         public ProductItemOrdered ItemOrdered { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public decimal Quantity { get; set; }
         
     }

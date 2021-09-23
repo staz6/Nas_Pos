@@ -8,7 +8,8 @@ namespace API.Entities
         public string Title { get; set; }
         public UnitOfMeasure UnitOfMeasure { get; set; }
         public string PictureUrl { get; set; }
-        public int Price { get; set; }
+        public decimal PurchasedPrice { get; set; }
+        public decimal Price { get; set; }
         public decimal Stock { get; set; }
         public string Description { get; set; }
         public int MinimumThreshold { get; set; }

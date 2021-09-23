@@ -58,7 +58,7 @@ namespace API.Data
                 var transactionItem = new Transaction(model.AmountPaid,paymentMethod.Type,paymentMethod.Description,true);
                 transaction.Add(transactionItem);
                 
-                 var ledge = new Ledger(order,subTotal+deliveryMethod.price, model.AmountPaid ,subTotal-model.AmountPaid,model.AmountPaid < subTotal? true:false, transaction );
+                 var ledge = new Ledger(order,subTotal+deliveryMethod.price, model.AmountPaid ,(subTotal+deliveryMethod.price)-model.AmountPaid,model.AmountPaid < subTotal? true:false, transaction );
                 _unitOfWork.Repository<Ledger>().Insert(ledge);
                 }
                 else{
@@ -110,18 +110,26 @@ namespace API.Data
 
         public async Task AddTransaction(int ledgerId, Transaction dto)
         {
+            
             try{
                 var spec = new LedgerWithOrderAndTransaction(ledgerId);
             var ledger = await _unitOfWork.Repository<Ledger>().GetEntityWithSpec(spec);
-
-            ledger.Transactions.Append(dto);
-            var result = await _unitOfWork.Complete();
-            if(result <= 0) throw new Exception();
+            if(ledger==null) throw new Exception("No resource with that specific id was found");
+            ledger.Transactions.Add(dto);
+            ledger.AmountPaid += dto.Amount;
+            ledger.AmountRemaining = ledger.TotalAmount-ledger.AmountPaid;
+            if(ledger.TotalAmount>ledger.AmountPaid){
+                ledger.IsDebit=true;
             }
-            catch(Exception ex)
-            {
+            else ledger.IsDebit=false;
+            
+            var result = await _unitOfWork.Complete();
+            if(result <=0) throw new Exception("Something went wrong, please try again later");  
+            }
+            catch(Exception ex){
                 throw new Exception(ex.Message);
             }
+            
             
             
         }

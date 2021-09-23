@@ -26,6 +26,7 @@ namespace Nas_Pos.Helper
         public MappingProfile()
         {
             CreateMap<RegisterEmployeeDto,Employee>();
+            CreateMap<RegisterCustomerDto,CustomerIdentity>();
 
 
             CreateMap<ProductType,PutProductTypeDto>().ReverseMap();

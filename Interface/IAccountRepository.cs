@@ -10,6 +10,8 @@ namespace API.Interface
         Task<string> Login(LoginDto model);
         Task RegisterEmployee(Employee model,string password);
         Task RegisterAdmin(Employee model,string password);
+        Task RegisterCustomer(CustomerIdentity model,string password);
+        Task CustomerResetPassword(CustomerResetPasswordDto model);
         
     }
 }

@@ -7,6 +7,7 @@ namespace Nas_Pos.Dto
         public int Id { get; set; }
         public string Title { get; set; }
         public string UnitOfMeasure { get; set; }
+        public string PictureUrl { get; set; }
         public int Price { get; set; }
         public int stock { get; set; }
         public int MinimumThreshold { get; set; }

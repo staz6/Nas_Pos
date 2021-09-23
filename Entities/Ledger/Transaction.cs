@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Nas_Pos.Entities.Identity;
 
 namespace API.Entities.Ledger

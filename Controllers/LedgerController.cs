@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Dto.Ledger;
 using API.Entities.Ledger;
+using API.Helper;
 using API.Interface;
 using API.Specification;
 using AutoMapper;
@@ -35,14 +36,18 @@ namespace API.Controllers
         [HttpPost("addTransaction/{ledgerId}")]
         public async Task<ActionResult> postLedger(int ledgerId,PostTransactionDto model)
         {
-            try{
-                var Transaction = _mapper.Map<Transaction>(model);
+                if(!ModelState.IsValid) return BadRequest();
+                try{
+                    var Transaction = _mapper.Map<Transaction>(model);
                 await _orderRepo.AddTransaction(ledgerId,Transaction);
-                return Ok();
-            }
-            catch(Exception ex){
-                return BadRequest(ex.Message);
-            }
+                return Ok(new ApiErrorResponse(ErrorStatusCode.UpdateSuccess));
+                }
+                catch{
+                    return BadRequest(new ApiErrorResponse(ErrorStatusCode.InvalidRequest));
+                }
+
         }
+
+        
     }
 }

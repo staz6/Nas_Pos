@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using API.Dto;
 using API.Entities.Identity;
@@ -62,6 +63,34 @@ namespace API.Controllers
                 return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
             catch{
+                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
+            }
+        }
+
+        [HttpPost("registerCustomer")]
+        public async Task<ActionResult> RegisteCustomer(RegisterCustomerDto model)
+        {
+            if(!ModelState.IsValid) return BadRequest();
+            var obj = _mapper.Map<CustomerIdentity>(model);
+            try{
+                await _accountRepo.RegisterCustomer(obj,model.Password);
+                return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
+            }
+            catch(Exception ex){
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("resetCustomerPassword")]
+        public async Task<ActionResult> ResetPassworCustomer(CustomerResetPasswordDto model)
+        {
+            if(!ModelState.IsValid) return BadRequest();
+  
+            try{
+                await _accountRepo.CustomerResetPassword(model);
+                return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
+            }
+            catch(Exception ){
                 return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
             }
         }

@@ -1,26 +1,13 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace API.Dto
 {
     public class RegisterCustomerDto
     {
-        [Required]
+        public int CustomerId { get; set; }
+        public string DisplayName { get; set; }
+
+        public int ShopId { get; set; }
         public string Email { get; set; }
-        [Required]
-        public string ContactNumber {get;set;}
-        [Required]
-        public string Occupation { get; set; }
-        [Required]
-        public string FirstName { get; set; }
-        [Required]
-        public string LastName { get; set; }
-        [Required]
-        public string Street { get; set; }
-        [Required]
-        public string City { get; set; }
-        [Required]
-        public string State { get; set; }
-        [Required]
-        public string Zipcode { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

@@ -1,9 +1,10 @@
+using API.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Interface
 {
     public interface ITokenService
     {
-        string CreateToken(IdentityUser user,string roleName);
+        string CreateToken(AppUser user,string roleName);
     }
 }

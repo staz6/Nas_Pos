@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using API.Entities.Identity;
 using API.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -21,14 +22,17 @@ namespace API.Data
         }
         //Actual Function which generate our token this is the same function being call using the interface in
         //Login function
-        public string CreateToken(IdentityUser user,string roleName)
+        public string CreateToken(AppUser user,string roleName)
         {
             /// Token claims edit it if u want to edit the token.
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId,user.Id),
                 new Claim(JwtRegisteredClaimNames.Email,user.Email),
+                new Claim(JwtRegisteredClaimNames.Sid as string,user.ShopId.ToString()),
                 new Claim(ClaimTypes.Role,roleName)
+                
+                
             };
 
             var creds = new SigningCredentials(_key,SecurityAlgorithms.HmacSha512Signature);

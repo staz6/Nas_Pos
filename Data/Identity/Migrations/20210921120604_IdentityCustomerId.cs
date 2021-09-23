@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace API.Data.Migrations
+namespace API.Data.Identity.Migrations
 {
-    public partial class thirdCreate : Migration
+    public partial class IdentityCustomerId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

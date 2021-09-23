@@ -2,9 +2,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities.Identity
 {
-    public class Employee : AppUser
+    public class AppUser : IdentityUser
     {
-        public string DisplayName { get; set; }
-
+        public int ShopId { get; set; }
     }
 }

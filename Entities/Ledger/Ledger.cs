@@ -10,7 +10,7 @@ namespace API.Entities.Ledger
         {
         }
 
-        public Ledger(Order order, decimal totalAmount, decimal amountPaid, decimal amountRemaining, bool isDebit, IReadOnlyList<Transaction> transactions)
+        public Ledger(Order order, decimal totalAmount, decimal amountPaid, decimal amountRemaining, bool isDebit, List<Transaction> transactions)
         {
             Order = order;
             TotalAmount = totalAmount;
@@ -25,6 +25,6 @@ namespace API.Entities.Ledger
         public decimal AmountPaid { get; set; }
         public decimal AmountRemaining { get; set; }
         public bool IsDebit { get; set; }
-        public IReadOnlyList<Transaction> Transactions { get; set; }
+        public List<Transaction> Transactions { get; set; }
     }
 }

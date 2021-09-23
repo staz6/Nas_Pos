@@ -27,9 +27,9 @@ namespace Nas_Pos.Controllers
             _repo = repo;
         }
         [HttpGet("product")]
-        public async Task<ActionResult<GetProductDto>> GetProductList()
+        public async Task<ActionResult<GetProductDto>> GetProductList([FromQuery]ProductSpecParams productParams)
         {
-            var spec = new GetProductWithShelvesSpecification();
+            var spec = new GetProductWithShelvesSpecification(productParams);
             var obj = await _repo.ListAsyncWithSpec(spec);
             var mapObj = _mapper.Map<IReadOnlyList<GetProductDto>>(obj);
             return Ok(mapObj);
@@ -38,21 +38,21 @@ namespace Nas_Pos.Controllers
         [HttpGet("product/{id}")]
         public async Task<ActionResult> GetProductById(int id)
         {
-            var spec = new GetProductWithShelvesSpecification();
+            var spec = new GetProductWithShelvesSpecification(id);
             var obj = await _repo.GetEntityWithSpec(spec);
             if(obj == null) return NotFound();
             var mapObj = _mapper.Map<GetProductDto>(obj);
             return Ok(mapObj);
         }
-        [HttpGet("productType")]
-        public async Task<ActionResult> GetProductByType(int id)
-        {
-            var spec = new GetProductWithShelvesSpecification();
-            var obj = await _repo.GetEntityWithSpec(spec);
-            if(obj == null) return NotFound();
-            var mapObj = _mapper.Map<GetProductDto>(obj);
-            return Ok(mapObj);
-        }
+        // [HttpGet("productType")]
+        // public async Task<ActionResult> GetProductByType(int id)
+        // {
+        //     var spec = new GetProductWithShelvesSpecification();
+        //     var obj = await _repo.GetEntityWithSpec(spec);
+        //     if(obj == null) return NotFound();
+        //     var mapObj = _mapper.Map<GetProductDto>(obj);
+        //     return Ok(mapObj);
+        // }
         [HttpPost("product")]
         public async Task<ActionResult> PostProduct(PostProductDto model)
         {

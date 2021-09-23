@@ -56,7 +56,7 @@ namespace API
             services.AddScoped<IOrderService,OrderService>();
 
             services.AddScoped<ITokenService, TokenService>();
-            services.AddIdentity<Employee, IdentityRole>(options => 
+            services.AddIdentity<AppUser, IdentityRole>(options => 
                     options.Password = new PasswordOptions{
                         RequiredLength = 8,
                         RequireNonAlphanumeric=false,
@@ -93,7 +93,7 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
