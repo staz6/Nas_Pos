@@ -1,11 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dto.ProductShelves;
 using API.Entities;
 using API.Helper;
+using API.Specification;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Nas_Pos.Helper;
 using Nas_Pos.Interface;
 
 namespace API.Controllers
@@ -21,27 +26,23 @@ namespace API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-        [HttpGet("productShelves")]
-        public async Task<ActionResult<GetProductShelvesDto>> GetProductShelvesList()
-        {
-            
-            var obj =await  _repo.GetAll();
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Admin)]
+        [HttpGet("productShelves/{shopId}")]
+        public async Task<ActionResult<GetProductShelvesDto>> GetProductShelvesList(int shopId)
+        {   
+            string ownerId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;  
+            var spec = new GetProductShelvesWithShopId(ownerId,shopId);
+            var obj =await  _repo.ListAsyncWithSpec(spec);
             var mapObj = _mapper.Map<IReadOnlyList<GetProductShelvesDto>>(obj);
             return Ok(mapObj);
         }
 
-        // [HttpGet("ProductShelves/{id}")]
-        // public async Task<ActionResult> GetProductShelvesById(int id)
-        // {
-        //     var spec = new GetProductShelvesWithProducts(id);
-        //     var obj = await _repo.GetEntityWithSpec(spec);
-        //     if(obj == null) return NotFound();
-        //     var mapObj = _mapper.Map<GetProductShelvesDto>(obj);
-        //     return Ok(mapObj);
-        // }
+       
         [HttpPost("productShelves")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Admin)]
         public async Task<ActionResult> PostProductShelves(PostProductShelvesDto model)
         {
+            
             if(!ModelState.IsValid) return BadRequest();
             var mapObj = _mapper.Map<ProductShelves>(model);
             _repo.Insert(mapObj);
@@ -50,6 +51,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("productShelves/{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Admin)]
         public async Task<ActionResult> DeleteProductShelves(int id)
         {
             if(!ModelState.IsValid) return BadRequest();
@@ -65,6 +67,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("productShelves/{id}")]
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Admin)]
         public async Task<ActionResult> patchProject(int id, JsonPatchDocument<PutProductShelvesDto> model)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -78,6 +81,16 @@ namespace API.Controllers
             await _repo.Save();
             return Ok((new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
 
+        }
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Employee)]
+        [HttpGet("productShelvesForEmployee")]
+        public async Task<ActionResult<GetProductShelvesDto>> getProductTypeOnly()
+        {
+            int shopId = int.Parse(HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value);
+            var spec = new GetProductShelvesWithShopId(shopId);
+            var obj = await _repo.ListAsyncWithSpec(spec);
+            var mapObj = _mapper.Map<IReadOnlyList<GetProductShelvesDto>>(obj);
+            return Ok(mapObj);
         }
 
         

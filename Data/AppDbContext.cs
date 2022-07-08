@@ -25,6 +25,7 @@ namespace Nas_Pos.Data
         public DbSet<BasketItem> BasketItems { get; set; }
         public DbSet<Ledger> Ledgers{get;set;}
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Shop> Shops { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -12,6 +12,7 @@ namespace API.Dto
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
+        [Required]
         public int ShopId { get; set; }
         
         

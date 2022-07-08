@@ -1,11 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dto.DeliveryMethod;
 using API.Entities.OrderAggregate;
 using API.Helper;
+using API.Specification;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Nas_Pos.Helper;
 using Nas_Pos.Interface;
 
 namespace API.Controllers
@@ -21,11 +27,24 @@ namespace API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-        [HttpGet("deliveryMethod")]
-        public async Task<ActionResult<GetDeliveryMethodDto>> GetDeliveryMethodList()
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Employee)]
+        [HttpGet("deliveryMethodForEmployee")]
+        public async Task<ActionResult<GetDeliveryMethodDto>> GetDeliveryMethodListForEmployee()
         {
-            
-            var obj = await _repo.GetAll();
+            int shopId = int.Parse(HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value);
+            var spec = new GetDeliveryMethodWithShopSpecification(shopId);        
+            var obj = await _repo.ListAsyncWithSpec(spec);
+            var mapObj = _mapper.Map<IReadOnlyList<GetDeliveryMethodDto>>(obj);
+            return Ok(mapObj);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Roles.Employee)]
+        [HttpGet("deliveryMethod/{shopId}")]
+        public async Task<ActionResult<GetDeliveryMethodDto>> GetDeliveryMethodList(int shopId)
+        {
+            string ownerId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            var spec = new GetDeliveryMethodWithShopSpecification(shopId,ownerId);        
+            var obj = await _repo.ListAsyncWithSpec(spec);
             var mapObj = _mapper.Map<IReadOnlyList<GetDeliveryMethodDto>>(obj);
             return Ok(mapObj);
         }

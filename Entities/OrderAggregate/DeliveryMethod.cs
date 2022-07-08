@@ -8,5 +8,7 @@ namespace API.Entities.OrderAggregate
         public string DeliveryTime { get; set; }
         public string Description { get; set; }
         public decimal price { get; set; }
+        public Shop Shop { get; set; }
+        public int ShopId {get;set;}
     }
 }

@@ -11,10 +11,11 @@ namespace API.Entities.OrderAggregate
         {
         }
 
-        public Order(Customer customer, DateTime orderDate,
+        public Order(string customerId, string employeeId,DateTime orderDate,
         PaymentMethod paymentMethod ,IReadOnlyList<OrderItem> orderItems, decimal subtotal, OrderStatus status)
         {
-            Customer = customer;
+            EmployeeId=employeeId;
+            CustomerId = customerId;
             PaymentMethod=paymentMethod;
             OrderDate = orderDate;          
             OrderItems = orderItems;
@@ -22,10 +23,11 @@ namespace API.Entities.OrderAggregate
             Status = status;
         }
 
-        public Order(Customer customer, DateTime orderDate, Address shipToAddress, 
+        public Order(string customerId, string employeeId ,DateTime orderDate, Address shipToAddress, 
         DeliveryMethod deliveryMethod, PaymentMethod paymentMethod ,IReadOnlyList<OrderItem> orderItems, decimal subtotal, OrderStatus status)
         {
-            Customer = customer;
+            CustomerId = customerId;
+            EmployeeId=employeeId;
             PaymentMethod=paymentMethod;
             OrderDate = orderDate;
             ShipToAddress = shipToAddress;
@@ -35,7 +37,8 @@ namespace API.Entities.OrderAggregate
             Status = status;
         }
 
-        public Customer Customer { get; set; }
+        public string  CustomerId { get; set; }
+        public string EmployeeId { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
         public Address? ShipToAddress { get; set; }
         

@@ -16,9 +16,19 @@ namespace API.Data
     {
         public static async Task SeedAsync(AppDbContext conntext , ILoggerFactory loggerFactory){
             try{
+                if(!conntext.Shops.Any()){
+                    
+                    var file = File.ReadAllText("/home/staz/Documents/pos/API/Helper/SeedData/shop.json");
+                    var data =JsonSerializer.Deserialize<List<Shop>>(file);
+                    foreach(var item in data){
+                        conntext.Shops.Add(item);
+                    }
+                    await conntext.SaveChangesAsync();
+
+                }
                 if(!conntext.ProductTypes.Any()){
                     
-                    var file = File.ReadAllText("../Helper/SeedData/types.json");
+                    var file = File.ReadAllText("/home/staz/Documents/pos/API/Helper/SeedData/types.json");
                     var data =JsonSerializer.Deserialize<List<ProductType>>(file);
                     foreach(var item in data){
                         conntext.ProductTypes.Add(item);
@@ -27,7 +37,7 @@ namespace API.Data
 
                 }
                 if(!conntext.ProductShelves.Any()){
-                    var file = File.ReadAllText("../Helper/SeedData/shelves.json");
+                    var file = File.ReadAllText("/home/staz/Documents/pos/API/Helper/SeedData/shelves.json");
                     var data =JsonSerializer.Deserialize<List<ProductShelves>>(file);
                     foreach(var item in data){
                         conntext.ProductShelves.Add(item);
@@ -36,7 +46,7 @@ namespace API.Data
 
                 }
                 if(!conntext.Products.Any()){
-                    var file = File.ReadAllText("../Helper/SeedData/products.json");
+                    var file = File.ReadAllText("/home/staz/Documents/pos/API/Helper/SeedData/products.json");
                     var data =JsonSerializer.Deserialize<List<Product>>(file);
                     foreach(var item in data){
                         conntext.Products.Add(item);
@@ -45,7 +55,7 @@ namespace API.Data
 
                 }
                 if(!conntext.DeliveryMethods.Any()){
-                    var file = File.ReadAllText("../Helper/SeedData/DeliveryMethod.json");
+                    var file = File.ReadAllText("/home/staz/Documents/pos/API/Helper/SeedData/DeliveryMethod.json");
                     var data =JsonSerializer.Deserialize<List<DeliveryMethod>>(file);
                     foreach(var item in data){
                         conntext.DeliveryMethods.Add(item);

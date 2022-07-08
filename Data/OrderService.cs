@@ -29,8 +29,8 @@ namespace API.Data
             try
             {
                 var paymentMethod = await _unitOfWork.Repository<PaymentMethod>().GetById(model.PaymentMethodId);
-                var customer = await _unitOfWork.Repository<Customer>().GetById(model.CustomerId);
-                if (customer == null) throw new Exception(ErrorStatusCode.CustomerNotFound);
+                // var customer = await _unitOfWork.Repository<Customer>().GetById(model.CustomerId);
+                // if (customer == null) throw new Exception(ErrorStatusCode.CustomerNotFound);
                 var items = new List<OrderItem>();
                 foreach (var item in model.BasketProducts)
                 {
@@ -51,7 +51,7 @@ namespace API.Data
                     var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetById(model.DeliveryMethodId);
                     
                     
-                    var order = new Order(customer, DateTime.Now, address, deliveryMethod, paymentMethod, items, subTotal, model.OrderStatus);
+                    var order = new Order(model.CustomerId, model.EmployeeId ,DateTime.Now, address, deliveryMethod, paymentMethod, items, subTotal, model.OrderStatus);
                      _unitOfWork.Repository<Order>().Insert(order);
                     
                     var transaction = new List<Transaction>();
@@ -62,7 +62,7 @@ namespace API.Data
                 _unitOfWork.Repository<Ledger>().Insert(ledge);
                 }
                 else{
-                     var order = new Order(customer, DateTime.Now, paymentMethod, items, subtotal: subTotal, model.OrderStatus);
+                     var order = new Order(model.CustomerId, model.EmployeeId ,DateTime.Now, paymentMethod, items, subtotal: subTotal, model.OrderStatus);
                       _unitOfWork.Repository<Order>().Insert(order);
                     
                 var transaction = new List<Transaction>();
@@ -90,7 +90,7 @@ namespace API.Data
             var spec = new OrdersWIthItemAndOrderingSpecifcation();
             return await _unitOfWork.Repository<Order>().ListAsyncWithSpec(spec);
         }
-        public async Task<IReadOnlyList<Order>> GetAllOrderById(int id)
+        public async Task<IReadOnlyList<Order>> GetOrderByCustomerId(string id)
         {
             var spec = new OrdersWIthItemAndOrderingSpecifcation(id);
             return await _unitOfWork.Repository<Order>().ListAsyncWithSpec(spec);

@@ -40,26 +40,28 @@ namespace API.Controllers
                 return Ok((new ApiErrorResponse(ErrorStatusCode.InvalidLogin)));
             }
         }
-        [HttpPost("register")]
+        [HttpPost("registerEmployee")]
         public async Task<ActionResult> RegisterEmployee(RegisterEmployeeDto model)
         {
             if(!ModelState.IsValid) return BadRequest();
-            var obj = _mapper.Map<Employee>(model);
+            var employee = _mapper.Map<Employee>(model);
+            var obj = _mapper.Map<AppUser>(model);
             try{
-                await _accountRepo.RegisterEmployee(obj,model.Password);
+                await _accountRepo.RegisterEmployee(employee,obj,model.Password);
                 return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
-            catch{
-                return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRegister)));
+            catch(Exception ex){
+                return BadRequest(ex.Message);
             }
         }
         [HttpPost("registerAdmin")]
-        public async Task<ActionResult> RegisterAdmin(RegisterEmployeeDto model)
+        public async Task<ActionResult> RegisterAdmin(RegisterAdminDto model)
         {
             if(!ModelState.IsValid) return BadRequest();
-            var obj = _mapper.Map<Employee>(model);
+            var obj = _mapper.Map<AppUser>(model);
+            var admin = _mapper.Map<Admin>(model);
             try{
-                await _accountRepo.RegisterAdmin(obj,model.Password);
+                await _accountRepo.RegisterAdmin(admin,obj,model.Password);
                 return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
             catch{
@@ -71,9 +73,10 @@ namespace API.Controllers
         public async Task<ActionResult> RegisteCustomer(RegisterCustomerDto model)
         {
             if(!ModelState.IsValid) return BadRequest();
-            var obj = _mapper.Map<CustomerIdentity>(model);
+            var obj = _mapper.Map<AppUser>(model);
+            var customer = _mapper.Map<CustomerIdentity>(model);
             try{
-                await _accountRepo.RegisterCustomer(obj,model.Password);
+                await _accountRepo.RegisterCustomer(customer,obj,model.Password);
                 return Ok((new ApiErrorResponse(ErrorStatusCode.ValidRegister)));
             }
             catch(Exception ex){

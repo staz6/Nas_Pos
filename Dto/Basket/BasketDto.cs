@@ -7,7 +7,8 @@ namespace API.Dto
 {
     public class BasketDto
     {
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
+        public string EmployeeId { get; set; }
         public List<EmployeeBasketItem> BasketProducts { get; set; }
         public int DeliveryMethodId { get; set; }
         public PostAddressDto Address { get; set; }

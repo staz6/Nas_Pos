@@ -7,7 +7,7 @@
     "ProductTypeId": 1,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 2,
+    "ProductShelvesId": 1,
     "UnitOfMeasure" :2
   },
   {
@@ -18,7 +18,7 @@
     "ProductTypeId": 1,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 2,
+    "ProductShelvesId": 1,
     "UnitOfMeasure" :3
   },
   {
@@ -26,7 +26,7 @@
     "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
     "Price": 180,
     "PictureUrl": "images/products/sb-core1.png",
-    "ProductTypeId": 1,
+    "ProductTypeId": 2,
     "Stock": 30,
     "MinimumThreshold" :10,
     "ProductShelvesId": 1,
@@ -37,10 +37,10 @@
     "Description": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.",
     "Price": 300,
     "PictureUrl": "images/products/sb-core2.png",
-    "ProductTypeId": 1,
+    "ProductTypeId": 2,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 2,
+    "ProductShelvesId": 1,
     "UnitOfMeasure" :2
   },
   {
@@ -59,10 +59,10 @@
     "Description": "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
     "Price": 120,
     "PictureUrl": "images/products/sb-ts1.png",
-    "ProductTypeId": 1,
+    "ProductTypeId": 2,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 2,
+    "ProductShelvesId": 1,
     "UnitOfMeasure" :1
   },
   {
@@ -70,7 +70,7 @@
     "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
     "Price": 10,
     "PictureUrl": "images/products/hat-core1.png",
-    "ProductTypeId": 2,
+    "ProductTypeId": 1,
     "Stock": 30,
     "MinimumThreshold" :10,
     "ProductShelvesId": 1,
@@ -81,7 +81,7 @@
     "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
     "Price": 8,
     "PictureUrl": "images/products/hat-react1.png",
-    "ProductTypeId": 2,
+    "ProductTypeId": 3,
     "Stock": 30,
     "MinimumThreshold" :10,
     "ProductShelvesId": 2,
@@ -92,10 +92,10 @@
     "Description": "Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
     "Price": 15,
     "PictureUrl": "images/products/hat-react2.png",
-    "ProductTypeId": 2,
+    "ProductTypeId": 3,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 1,
+    "ProductShelvesId": 2,
     "UnitOfMeasure" :0
   },
   {
@@ -106,7 +106,7 @@
     "ProductTypeId": 4,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 1,
+    "ProductShelvesId": 2,
     "UnitOfMeasure" :2
   },
   {
@@ -128,7 +128,7 @@
     "ProductTypeId": 4,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 1,
+    "ProductShelvesId": 2,
     "UnitOfMeasure" :0
   },
   {
@@ -139,7 +139,7 @@
     "ProductTypeId": 4,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 1,
+    "ProductShelvesId": 2,
     "UnitOfMeasure" :2
   },
   {
@@ -150,7 +150,7 @@
     "ProductTypeId": 3,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 1,
+    "ProductShelvesId": 2,
     "UnitOfMeasure" :3
   },
   {
@@ -172,7 +172,7 @@
     "ProductTypeId": 3,
     "Stock": 30,
     "MinimumThreshold" :10,
-    "ProductShelvesId": 1,
+    "ProductShelvesId": 2,
     "UnitOfMeasure" :1
   },
   {
@@ -191,7 +191,7 @@
     "Description": "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
     "Price": 180,
     "PictureUrl": "images/products/boot-ang1.png",
-    "ProductTypeId": 3,
+    "ProductTypeId": 2,
     "Stock": 30,
     "MinimumThreshold" :10,
     "ProductShelvesId": 1,

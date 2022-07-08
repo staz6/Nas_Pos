@@ -1,0 +1,16 @@
+[
+    {
+        "Id": 1,
+        "OwnerId":"3825c65a-dc66-4b54-b29c-03b55615d31d",
+        "Title": "Click Shop",
+        "PictureUrl": "https://s.tmimgcdn.com/scr/800x500/73800/click-shop-logo-template_73864-original.jpg",
+        "Description": "The shop you click"
+      },
+      {
+        "Id": 2,
+        "OwnerId":"3825c65a-dc66-4b54-b29c-03b55615d31d",
+        "Title": "Live Love Shop",
+        "PictureUrl": "https://st2.depositphotos.com/37114524/44075/v/950/depositphotos_440753212-stock-illustration-bag-shop-online-logo-design.jpg",
+        "Description": "The shop you love"
+      }
+]

@@ -61,7 +61,7 @@ namespace API.Controllers
         [Authorize(AuthenticationSchemes = "Bearer", Roles = "" + Roles.Employee + "," + Roles.Admin + "")]
         [HttpDelete("basket/{id}")]
         public async Task<ActionResult> deleteBasket(int id){
-            string userId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            string userId = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.GivenName)?.Value;
             try
             {
                 await _service.deleteBasket(id);
@@ -82,7 +82,7 @@ namespace API.Controllers
                 await _service.removeItem(userId,productId);
                 return Ok((new ApiErrorResponse(ErrorStatusCode.UpdateSuccess)));
             }
-            catch(Exception ex)
+            catch(Exception )
             {
                 return BadRequest((new ApiErrorResponse(ErrorStatusCode.InvalidRequest)));
             }

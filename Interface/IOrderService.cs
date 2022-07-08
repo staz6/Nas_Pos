@@ -11,7 +11,7 @@ namespace API.Interface
     {
         Task AddOrder(BasketDto model);
         Task<IReadOnlyList<Order>> GetAllOrder();
-        Task<IReadOnlyList<Order>> GetAllOrderById(int id);
+        Task<IReadOnlyList<Order>> GetOrderByCustomerId(string id);
         Task<Order> GetOrderById(int id);
         Task<IReadOnlyList<Order>> GetOrderBySort(int id); 
 

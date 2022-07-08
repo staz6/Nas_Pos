@@ -29,7 +29,7 @@ namespace API.Data
             {
                 new Claim(JwtRegisteredClaimNames.NameId,user.Id),
                 new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                new Claim(JwtRegisteredClaimNames.Sid as string,user.ShopId.ToString()),
+                new Claim(JwtRegisteredClaimNames.GivenName,user.ShopId.ToString()),
                 new Claim(ClaimTypes.Role,roleName)
                 
                 

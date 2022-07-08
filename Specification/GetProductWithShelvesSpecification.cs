@@ -5,8 +5,8 @@ namespace API.Specification
 {
     public class GetProductWithShelvesSpecification : BaseSpecification<Product>
     {
-        public GetProductWithShelvesSpecification(ProductSpecParams productParams) 
-            : base(x => 
+        public GetProductWithShelvesSpecification(int shopId,ProductSpecParams productParams) 
+            : base(x => (x.ProductType.ShopId == shopId) && (x.ProductShelves.ShopId==shopId) &&
                 (string.IsNullOrEmpty(productParams.Search) || x.Title.ToLower().Contains
                 (productParams.Search)) &&
                 (!productParams.TypeID.HasValue || x.ProductTypeId==productParams.TypeID) &&
@@ -31,6 +31,7 @@ namespace API.Specification
                 }
             }
         }
+      
         public GetProductWithShelvesSpecification(int id) : base(x => x.Id==id)
         {
             AddInclude(x => x.ProductShelves);

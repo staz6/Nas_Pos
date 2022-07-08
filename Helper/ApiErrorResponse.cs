@@ -30,7 +30,7 @@ namespace API.Helper
                 ErrorStatusCode.InvalidLogin => "Incorrect email address or password",
                 ErrorStatusCode.NotFound => "Resource Not Found",
                 200 => "Invalid Login Attempt",
-                400 => "Bad Request",
+                
                 ErrorStatusCode.NotAuthorize => "Not Authorize",
                 ErrorStatusCode.BiometricExist => "Biometric is register to another employee",
                 ErrorStatusCode.InvalidRequest => "Invalid Request",

@@ -1,10 +1,12 @@
 [
     {
         "Id": 1,
-        "Title": "Angular"
+        "ShopId":1,
+        "Title": "ShelvesA"
       },
       {
         "Id": 2,
-        "Title": "NetCore"
+        "ShopId":2,
+        "Title": "ShelvesB"
       }
 ]

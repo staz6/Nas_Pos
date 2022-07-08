@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Data.Identity;
+using API.Entities.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,12 +25,17 @@ namespace API
                 var service =scope.ServiceProvider;
                 var loggerFactory =service.GetRequiredService<ILoggerFactory>();
                 try{
+                    // var userManager = service.GetRequiredService<UserManager<AppUser>>();
+                    // var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+                    // var identityDbContext = service.GetRequiredService<IdentityDbContext>();
+                    // await identityDbContext.Database.MigrateAsync();
+                    // await IdentityContextSeed.SeedUserAsync(userManager,roleManager,identityDbContext);
                     var context =service.GetRequiredService<AppDbContext>();
                     await context.Database.MigrateAsync();
                     await StoreContextSeed.SeedAsync(context,loggerFactory);
                 }
-                catch{
-
+                catch(Exception ex){
+                    loggerFactory.CreateLogger(ex.Message);
                 }
             }
             host.Run();

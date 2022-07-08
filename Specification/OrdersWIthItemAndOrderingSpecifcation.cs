@@ -11,28 +11,26 @@ namespace API.Specification
         {
             AddInclude(o => o.DeliveryMethod);
             AddInclude(x => x.OrderItems);
-            AddInclude(x => x.Customer);
         }
         public OrdersWIthItemAndOrderingSpecifcation(int id,string x): base(x => x.Id==id)
         {
             AddInclude(o => o.DeliveryMethod);
             AddInclude(x => x.OrderItems);
-            AddInclude(x => x.Customer);
+            
         }
         
 
-        public OrdersWIthItemAndOrderingSpecifcation(int id) : base(x => x.Customer.Id==id)
+        public OrdersWIthItemAndOrderingSpecifcation(string id) : base(x => x.CustomerId==id)
         {
             AddInclude(o => o.DeliveryMethod);
             AddInclude(x => x.OrderItems);
-            AddInclude(x => x.Customer);
+            
         }
 
         public OrdersWIthItemAndOrderingSpecifcation(int id,string x, string y) : base(x => ((int)x.Status)==id)
         {
             AddInclude(o => o.DeliveryMethod);
             AddInclude(x => x.OrderItems);
-            AddInclude(x => x.Customer);
         }
     }
 }

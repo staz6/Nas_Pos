@@ -6,5 +6,6 @@ namespace API.Dto.DeliveryMethod
         public string DeliveryTime { get; set; }
         public string Description { get; set; }
         public int price { get; set; }
+        public int shopId { get; set; }
     }
 }

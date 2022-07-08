@@ -56,39 +56,41 @@ namespace API.Data.Identity
             }
         }
 
-        public async Task RegisterAdmin(Employee model, string password)
+        public async Task RegisterAdmin(Admin admin,AppUser model, string password)
         {
             try
             {
                 model.UserName=model.Email;
-                var email = _userManager.FindByEmailAsync(model.Email);
+                var email = await _userManager.FindByEmailAsync(model.Email);
                 if(email !=null) throw new Exception("User with that email already exist");
                 var role =await _roleManager.RoleExistsAsync(Roles.Admin);
                 if(!role){
                     await _roleManager.CreateAsync(new IdentityRole(Roles.Admin));
                 }
                 var result = await _userManager.CreateAsync(model, password);
-                if (!result.Succeeded) throw new Exception();
+                if (!result.Succeeded) throw new Exception("Invalid register attempt please try again later");
+                admin.AppUser=model;
+                await _context.Admins.AddAsync(admin);
 
                 await _userManager.AddToRoleAsync(model, Roles.Admin);
-                
+                await _context.SaveChangesAsync();
                
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
-        public async Task RegisterCustomer(CustomerIdentity model, string password)
+        public async Task RegisterCustomer(CustomerIdentity customer,AppUser model, string password)
         {
               try
             {
-                var user = await  _context.Customers.FirstOrDefaultAsync( x=> x.CustomerId == model.CustomerId);
-                if(user != null) throw new Exception("User already exist");
+                // var user = await  _context.Customers.FirstOrDefaultAsync( x=> x.CustomerId == model.CustomerId);
+                // if(user != null) throw new Exception("User already exist");
                  model.UserName=model.Email;
-                var email = _userManager.FindByEmailAsync(model.Email);
+                var email = await _userManager.FindByEmailAsync(model.Email);
                 if(email !=null) throw new Exception("User with that email already exist");
                 var role =await _roleManager.RoleExistsAsync(Roles.Customer);
                 if(!role){
@@ -96,9 +98,12 @@ namespace API.Data.Identity
                 }
                 var result = await _userManager.CreateAsync(model, password);
                 if (!result.Succeeded) throw new Exception();
+                customer.AppUser=model;
+                await _context.Customers.AddAsync(customer);
+                
 
                 await _userManager.AddToRoleAsync(model, Roles.Customer);
-                
+                await _context.SaveChangesAsync();
                
                 
             }
@@ -108,12 +113,12 @@ namespace API.Data.Identity
             }
         }
 
-        public async Task RegisterEmployee(Employee model,string password)
+        public async Task RegisterEmployee(Employee employee,AppUser model,string password)
         {
              try
             {
                 model.UserName=model.Email;
-                var email = _userManager.FindByEmailAsync(model.Email);
+                var email = await _userManager.FindByEmailAsync(model.Email);
                 if(email !=null) throw new Exception("User with that email already exist");
                 var role =await _roleManager.RoleExistsAsync(Roles.Employee);
                 if(!role){
@@ -121,8 +126,11 @@ namespace API.Data.Identity
                 }
                 var result = await _userManager.CreateAsync(model, password);
                 if (!result.Succeeded) throw new Exception();
+                employee.AppUser=model;
+                await _context.Employees.AddAsync(employee);
 
                 await _userManager.AddToRoleAsync(model, Roles.Employee);
+                await _context.SaveChangesAsync();
                 
                
                 
@@ -137,7 +145,7 @@ namespace API.Data.Identity
         public async Task CustomerResetPassword(CustomerResetPasswordDto model)
         {
             try{
-            var user = await  _context.Customers.FirstOrDefaultAsync( x=> x.CustomerId == model.Id);
+            var user = await  _userManager.FindByEmailAsync(model.Email);
             if(user == null) throw new Exception(ErrorStatusCode.CustomerNotFound);
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, token, model.Password);

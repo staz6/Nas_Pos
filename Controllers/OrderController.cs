@@ -44,9 +44,9 @@ namespace API.Controllers
             return Ok(mapObj);
         }
         [HttpGet("customerOrder/{customerId}")]
-        public async Task<ActionResult<IReadOnlyList<GetOrderDto>>>  GetOrderByCustomerId(int customerId)
+        public async Task<ActionResult<IReadOnlyList<GetOrderDto>>>  GetOrderByCustomerId(string customerId)
         {
-            var obj = await _service.GetAllOrderById(customerId);
+            var obj = await _service.GetOrderByCustomerId(customerId);
             if(obj == null) return NotFound(new ApiErrorResponse(ErrorStatusCode.NotFound));
             var mapObj = _mapper.Map<IReadOnlyList<GetOrderDto>>(obj);
             return Ok(mapObj);

@@ -1,18 +1,22 @@
 [
   {
     "Id": 1,
+    "ShopId":1,
     "Title": "Boards"
   },
   {
     "Id": 2,
+    "ShopId":1,
     "Title": "Hats"
   },
   {
     "Id": 3,
+    "ShopId":2,
     "Title": "Boots"
   },
   {
     "Id": 4,
+    "ShopId":2,
     "Title": "Gloves"
   }
 ]

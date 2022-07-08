@@ -16,6 +16,7 @@ namespace API.Data.Identity
         public DbSet<AppUser> AppUsers{get;set;}
         public DbSet<Employee> Employees{get;set;}
         public DbSet<CustomerIdentity> Customers{get;set;}
+        public DbSet<Admin> Admins{get;set;}
 
         public void MigrateDb()
         {
